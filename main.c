@@ -6,7 +6,7 @@
 /*   By: valentins <valentins@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:33:44 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/25 16:16:48 by valentins        ###   ########.fr       */
+/*   Updated: 2024/04/25 17:23:04 by valentins        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	create_philo(t_data *data)
 		pthread_mutex_init(&data->philo[i].own_fork, NULL);
 		if (i < 0)
 			data->philo[i].left_fork = &data->philo[i - 1].own_fork;
+		if(data->philo->id % 2 == 0)
+			ft_usleep(10);
 		pthread_create(&data->philo[i].philo, NULL, routine, data);
 		ft_printf("philo %d\n", i);
 		i++;
