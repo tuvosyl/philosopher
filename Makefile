@@ -9,7 +9,7 @@ THREAD_FLAG		+= -lpthread
 FT			= libft
 LIBFT		= $(FT)/libft.a
 
-SRC 		= main.c
+SRC 		= main.c routine.c utils.c
 OBJ 		= $(SRC:.c=.o)
 
 all: $(NAME)

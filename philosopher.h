@@ -10,20 +10,23 @@
 # include <fcntl.h>
 # include "libft/libft.h"
 # include <pthread.h>
-
+#include <sys/time.h>
 typedef struct s_arg
 {
-	size_t philo_counter;
-	size_t time_to_die;
-	size_t time_to_eat;
-	size_t time_to_sleep;
-	size_t max_eating;
+	int philo_counter;
+	int time_to_die;
+	int time_to_eat;
+	int time_to_sleep;
+	int max_eating;
+	long int start_time;
 }	t_arg;
 
 typedef struct s_philo
 {
-	pthread_t 	own_fork;
-	pthread_t 	left_fork;
+	int id;
+	pthread_t 	philo;
+	pthread_mutex_t 	own_fork;
+	pthread_mutex_t 	*left_fork;
 	int			eating_count;
 	int			dead;
 }	t_philo;
@@ -33,5 +36,9 @@ typedef struct s_data
 	t_arg arg;
 	t_philo *philo;
 }	t_data;
+
+void			*routine(void *args);
+long int		actual_time(void);
+void	ft_usleep(long int time);
 
 # endif
