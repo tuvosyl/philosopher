@@ -3,20 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentins <valentins@student.42.fr>        +#+  +:+       +#+        */
+/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:33:44 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/25 17:23:04 by valentins        ###   ########.fr       */
+/*   Updated: 2024/04/29 18:23:46 by vsoltys          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 #include <pthread.h>
-void *oui(void *args)
+void wait_all_philo(t_data *data)
 {
-	(void)args;
-	ft_printf("non\n\n");
-	return (NULL);
+	int i;
+
+	i = 0;
+	pthread_create(&data->tcheck_dead, NULL, dead_routine, data);
+	//pthread_create(&data->tall_eat, NULL, all_eat_routine, data);
+	while(i != data->arg.philo_counter)
+	{
+		pthread_join(data->philo[i].philo, NULL);
+		
+		i++;
+	}
 }
 int parsing (int argc, char **argv)
 {
@@ -25,7 +33,7 @@ int parsing (int argc, char **argv)
 
 	i = 1;
 	j = 0;
-	if (argc > 6 || argc < 4)
+	if (argc > 6 || argc <= 4)
 		return (1);
 	while(argv[i] && i != 5)
 	{
@@ -49,9 +57,9 @@ void converting_input(char **argv, t_data *data)
 	data->arg.time_to_sleep = ft_atoi(argv[4]);
 	data->arg.start_time = actual_time();
 	if (argv[5])
-	{
 		data->arg.max_eating = ft_atoi(argv[5]);
-	}
+	else
+		data->arg.max_eating = -1;
 }
 
 void	create_philo(t_data *data)
@@ -60,34 +68,43 @@ void	create_philo(t_data *data)
 	
 	i = 0;
 	data->philo = malloc(sizeof(t_philo) * data->arg.philo_counter);
+	data->fork = malloc(sizeof(pthread_mutex_t) * data->arg.philo_counter);
+	data->dead_flag = false;
+	pthread_mutex_init(&data->dead, NULL);
+	pthread_mutex_init(&data->time_eat, NULL);
+	pthread_mutex_init(&data->write, NULL);
 	while (i != data->arg.philo_counter)
 	{
 		data->philo[i].id = i;
-		pthread_mutex_init(&data->philo[i].own_fork, NULL);
-		if (i < 0)
-			data->philo[i].left_fork = &data->philo[i - 1].own_fork;
-		if(data->philo->id % 2 == 0)
-			ft_usleep(10);
-		pthread_create(&data->philo[i].philo, NULL, routine, data);
-		ft_printf("philo %d\n", i);
+		data->wait_timer = 0;
+		data->philo[i].eating_count = 0;
+		data->philo[i].last_meal_timer = 0;
+		data->philo[i].data = data;
+		pthread_mutex_init(&data->fork[i], NULL);
+		data->philo[i].own_fork = &data->fork[i];
+		if (i >= 1)
+			data->philo[i].left_fork = &data->fork[i - 1];
 		i++;
 	}
-	data->philo[i].left_fork = &data->philo[0].own_fork;
+	i--;
+	data->philo[0].left_fork = &data->fork[i];
+	i = 0;
+	while(i != data->arg.philo_counter)
+	{
+		pthread_create(&data->philo[i].philo, NULL, routine, &data->philo[i]);
+		i++;
+	}
 }
 int main(int argc, char **argv)
 {
 	//philo == thread
 	//fork == mutex
 	t_data data;
+
 	if (parsing(argc, argv) == 1)
 		return (ft_printf("Error: wrong input\n"), 1);
 	converting_input(argv, &data);
-	printf("%ld\n", actual_time() - data.arg.start_time);
-	sleep(2);
-	printf("%ld\n", actual_time() - data.arg.start_time);
 	create_philo(&data);
-	printf("%ld\n", actual_time() - data.arg.start_time);
-	// pthread_create(&ouii, NULL, oui, NULL);
-	// pthread_join(ouii, NULL);
+	wait_all_philo(&data);
 	return (0);
 }

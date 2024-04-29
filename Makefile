@@ -3,13 +3,13 @@ NAME 		= philo
 CC 			= cc
 RM			= rm -f
 
-CFLAGS 		+= -g -Wall -Wextra -Werror -O3 
-THREAD_FLAG		+= -lpthread
+CFLAGS 		+= -g -Wall -Wextra -Werror -O3
+THREAD_FLAG		+= -pthread
 
 FT			= libft
 LIBFT		= $(FT)/libft.a
 
-SRC 		= main.c routine.c utils.c
+SRC 		= main.c routine.c utils.c dead_routine.c aile_ou_cuisse.c
 OBJ 		= $(SRC:.c=.o)
 
 all: $(NAME)
