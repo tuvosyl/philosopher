@@ -6,7 +6,7 @@
 /*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:44:31 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/29 18:18:37 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:40:05 by vsoltys          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@ void	*all_eat_routine(void *args)
 {
 	t_data *data;
 	int i;
-	bool state;
 	
 	data = (t_data *)args;
-	i = 0;
-	while(12)
+	if (data->arg.max_eating == -1)
+		return (NULL);
+	ft_usleep(10);
+	while(1)
 	{
 		i = 0;
-		state = true;
-		while(i != data->arg.philo_counter)
+		while(i < data->arg.philo_counter)
 		{
-			pthread_mutex_lock(&data->time_eat);
-			if (!(data->philo[i].eating_count >= data->arg.max_eating))
+			pthread_mutex_lock(&data->eating_count);
+			if (data->arg.max_eating >= data->philo[i].eating_count)
 			{
-				state = false;
-				pthread_mutex_unlock(&data->time_eat);
-				break;
+				pthread_mutex_unlock(&data->eating_count);
+				// custom_printf(&data->philo[1], "oui", B_RED);
+				break ;
 			}
-			pthread_mutex_unlock(&data->time_eat);
+			pthread_mutex_unlock(&data->eating_count);
 			i++;
 		}
-		if (state == true)
+		if(i >= data->arg.philo_counter)
 		{
 			pthread_mutex_lock(&data->dead);
 			data->dead_flag = true;
@@ -44,4 +44,5 @@ void	*all_eat_routine(void *args)
 			return (NULL);
 		}
 	}
+	custom_printf(&data->philo[1], "non", B_RED);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosopher.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 15:02:02 by vsoltys           #+#    #+#             */
+/*   Updated: 2024/04/30 16:50:18 by vsoltys          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHER_H
 # define PHILOSOPHER_H
 
@@ -8,8 +20,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include "libft/libft.h"
 # include <pthread.h>
+# include <stdbool.h>
 #include <sys/time.h>
 
 # define RESET "\033[0m"
@@ -31,34 +43,38 @@ typedef struct s_arg
 
 typedef struct s_philo
 {
-	struct s_data *data;
-	int id;
-	pthread_t 	philo;
+	struct s_data 		*data;
+	int					id;
+	pthread_t 			philo;
 	pthread_mutex_t		*own_fork;
 	pthread_mutex_t 	*left_fork;
-	int			eating_count;
+	int					eating_count;
 	long int			last_meal_timer;
 }	t_philo;
 
 typedef struct s_data
 {
-	t_arg arg;
+	t_arg 			arg;
 	pthread_mutex_t	write;
 	pthread_mutex_t	dead;
 	pthread_mutex_t time_eat;
-	pthread_t tcheck_dead;
-	pthread_t tall_eat;
+	pthread_mutex_t eating_count;
+	pthread_t 		tcheck_dead;
+	pthread_t		tall_eat;
 	bool			dead_flag;
-	int			wait_timer;
-	pthread_mutex_t		*fork;
-	t_philo *philo;
+	int				wait_timer;
+	pthread_mutex_t	*fork;
+	t_philo			*philo;
 }	t_data;
 
 void			*routine(void *args);
-void	custom_printf(t_philo *philo, char *str, char *color);
+void			custom_printf(t_philo *philo, char *str, char *color);
 long int		actual_time(void);
-void	ft_usleep(long int time);
-void	*dead_routine(void *args);
-void	*all_eat_routine(void *args);
+void			ft_usleep(long int time);
+int				ft_isdigit(int c);
+int				ft_atoi(const char *nptr);
+int				ft_strncmp(const char *s1, const char *s2, size_t n );
+void			*dead_routine(void *args);
+void			*all_eat_routine(void *args);
 
 # endif

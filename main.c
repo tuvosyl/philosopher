@@ -6,7 +6,7 @@
 /*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:33:44 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/29 18:23:46 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/04/30 16:46:05 by vsoltys          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,20 @@ void wait_all_philo(t_data *data)
 
 	i = 0;
 	pthread_create(&data->tcheck_dead, NULL, dead_routine, data);
-	//pthread_create(&data->tall_eat, NULL, all_eat_routine, data);
+	pthread_create(&data->tall_eat, NULL, all_eat_routine, data);
 	while(i != data->arg.philo_counter)
 	{
 		pthread_join(data->philo[i].philo, NULL);
-		
 		i++;
 	}
+	pthread_mutex_destroy(&data->dead);
+	pthread_mutex_destroy(&data->eating_count);
+	pthread_mutex_destroy(&data->time_eat);
+	pthread_mutex_destroy(&data->write);
+	// pthread_join(data->tall_eat, NULL);
+	// pthread_join(data->tcheck_dead, NULL);
 }
+
 int parsing (int argc, char **argv)
 {
 	int i;
@@ -71,6 +77,7 @@ void	create_philo(t_data *data)
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->arg.philo_counter);
 	data->dead_flag = false;
 	pthread_mutex_init(&data->dead, NULL);
+	pthread_mutex_init(&data->eating_count, NULL);
 	pthread_mutex_init(&data->time_eat, NULL);
 	pthread_mutex_init(&data->write, NULL);
 	while (i != data->arg.philo_counter)
@@ -102,8 +109,13 @@ int main(int argc, char **argv)
 	t_data data;
 
 	if (parsing(argc, argv) == 1)
-		return (ft_printf("Error: wrong input\n"), 1);
+		return (printf("Error: wrong input\n"), 1);
 	converting_input(argv, &data);
+	if (data.arg.philo_counter == 1)
+	{
+		printf("%s%d %d %s%s\n",B_RED, 0, 1, "died", RESET);
+		return (0);
+	}
 	create_philo(&data);
 	wait_all_philo(&data);
 	return (0);
