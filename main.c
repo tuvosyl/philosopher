@@ -6,20 +6,21 @@
 /*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:33:44 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/30 16:46:05 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/04/30 17:05:40 by vsoltys          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 #include <pthread.h>
-void wait_all_philo(t_data *data)
+
+void	wait_all_philo(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	pthread_create(&data->tcheck_dead, NULL, dead_routine, data);
 	pthread_create(&data->tall_eat, NULL, all_eat_routine, data);
-	while(i != data->arg.philo_counter)
+	while (i != data->arg.philo_counter)
 	{
 		pthread_join(data->philo[i].philo, NULL);
 		i++;
@@ -28,22 +29,20 @@ void wait_all_philo(t_data *data)
 	pthread_mutex_destroy(&data->eating_count);
 	pthread_mutex_destroy(&data->time_eat);
 	pthread_mutex_destroy(&data->write);
-	// pthread_join(data->tall_eat, NULL);
-	// pthread_join(data->tcheck_dead, NULL);
 }
 
-int parsing (int argc, char **argv)
+int	parsing(int argc, char **argv)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	j = 0;
 	if (argc > 6 || argc <= 4)
 		return (1);
-	while(argv[i] && i != 5)
+	while (argv[i] && i != 5)
 	{
-		while(argv[i][j])
+		while (argv[i][j])
 		{
 			if (ft_isdigit(argv[i][j]) == 0)
 				return (1);
@@ -55,7 +54,7 @@ int parsing (int argc, char **argv)
 	return (0);
 }
 
-void converting_input(char **argv, t_data *data)
+void	converting_input(char **argv, t_data *data)
 {
 	data->arg.philo_counter = ft_atoi(argv[1]);
 	data->arg.time_to_die = ft_atoi(argv[2]);
@@ -70,16 +69,10 @@ void converting_input(char **argv, t_data *data)
 
 void	create_philo(t_data *data)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	data->philo = malloc(sizeof(t_philo) * data->arg.philo_counter);
-	data->fork = malloc(sizeof(pthread_mutex_t) * data->arg.philo_counter);
-	data->dead_flag = false;
-	pthread_mutex_init(&data->dead, NULL);
-	pthread_mutex_init(&data->eating_count, NULL);
-	pthread_mutex_init(&data->time_eat, NULL);
-	pthread_mutex_init(&data->write, NULL);
+	norme(data);
 	while (i != data->arg.philo_counter)
 	{
 		data->philo[i].id = i;
@@ -96,24 +89,23 @@ void	create_philo(t_data *data)
 	i--;
 	data->philo[0].left_fork = &data->fork[i];
 	i = 0;
-	while(i != data->arg.philo_counter)
+	while (i != data->arg.philo_counter)
 	{
 		pthread_create(&data->philo[i].philo, NULL, routine, &data->philo[i]);
 		i++;
 	}
 }
-int main(int argc, char **argv)
+
+int	main(int argc, char **argv)
 {
-	//philo == thread
-	//fork == mutex
-	t_data data;
+	t_data	data;
 
 	if (parsing(argc, argv) == 1)
 		return (printf("Error: wrong input\n"), 1);
 	converting_input(argv, &data);
 	if (data.arg.philo_counter == 1)
 	{
-		printf("%s%d %d %s%s\n",B_RED, 0, 1, "died", RESET);
+		printf("%s%d %d %s%s\n", B_RED, 0, 1, "died", RESET);
 		return (0);
 	}
 	create_philo(&data);

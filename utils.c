@@ -6,7 +6,7 @@
 /*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:18:36 by valentins         #+#    #+#             */
-/*   Updated: 2024/04/30 16:48:13 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/04/30 16:54:34 by vsoltys          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,10 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
-long int		actual_time(void)
+long int	actual_time(void)
 {
 	long int			time;
 	struct timeval		current_time;
-
 
 	gettimeofday(&current_time, NULL);
 	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
@@ -74,9 +73,8 @@ void	custom_printf(t_philo *philo, char *str, char *color)
 {
 	pthread_mutex_lock(&philo->data->write);
 	pthread_mutex_lock(&philo->data->time_eat);
-	if (!ft_strncmp(color, B_GREEN, 10) && philo)
-		printf("philo %d as eaten %d times\n", philo->id + 1, philo->eating_count);
-	printf("%s%ld %d %s%s\n",color, actual_time() - philo->data->arg.start_time, philo->id + 1, str, RESET);
+	printf("%s%ld %d %s%s\n", color,
+		actual_time() - philo->data->arg.start_time, philo->id + 1, str, RESET);
 	pthread_mutex_unlock(&philo->data->time_eat);
 	pthread_mutex_unlock(&philo->data->write);
 }
