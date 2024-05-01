@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:38:19 by valentins         #+#    #+#             */
-/*   Updated: 2024/05/01 17:31:48 by val              ###   ########.fr       */
+/*   Updated: 2024/05/01 20:46:53 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	eat(t_philo *philo)
 	pthread_mutex_lock(philo->left_fork);
 	if (check_death(philo->data))
 	{
-		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->own_fork);
+		pthread_mutex_unlock(philo->left_fork);
 		return ;
 	}
 	custom_printf(philo, "has taken a fork", B_YELLOW);
@@ -31,8 +31,8 @@ void	eat(t_philo *philo)
 	philo->last_meal_timer = actual_time();
 	pthread_mutex_unlock(&philo->data->time_eat);
 	ft_usleep(philo->data->arg.time_to_eat);
-	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->own_fork);
+	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_lock(&philo->data->eating_count);
 	philo->eating_count++;
 	pthread_mutex_unlock(&philo->data->eating_count);
@@ -56,7 +56,6 @@ void	*routine(void *args)
 		ft_usleep(10);
 	while (12)
 	{
-		custom_printf(philo, "is thinking", B_CYAN);
 		if (check_death(philo->data))
 			break ;
 		eat(philo);
@@ -65,6 +64,7 @@ void	*routine(void *args)
 		sleepp(philo);
 		if (check_death(philo->data))
 			break ;
+		custom_printf(philo, "is thinking", B_CYAN);
 	}
 	return (NULL);
 }
