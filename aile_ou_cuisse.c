@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:44:31 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/05/01 12:20:30 by val              ###   ########.fr       */
+/*   Updated: 2024/05/01 13:39:59 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	*all_eat_routine(void *args)
 	ft_usleep(10);
 	while (1)
 	{
+		ft_usleep(1);
 		i = 0;
 		while (i < data->arg.philo_counter)
 		{

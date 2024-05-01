@@ -3,8 +3,8 @@ NAME 		= philo
 CC 			= cc
 RM			= rm -f
 
-CFLAGS 		+= -g -Wall -Wextra -Werror -O3
-THREAD_FLAG		+= -pthread
+CFLAGS 		+= -g -Wall -Wextra -Werror -O3 -fsanitize=thread
+THREAD_FLAG		+= 
 
 SRC 		= main.c routine.c utils.c utils2.c dead_routine.c aile_ou_cuisse.c
 OBJ 		= $(SRC:.c=.o)
