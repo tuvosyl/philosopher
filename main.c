@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:33:44 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/30 17:05:40 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:50:27 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,19 @@ void	wait_all_philo(t_data *data)
 		pthread_join(data->philo[i].philo, NULL);
 		i++;
 	}
+	pthread_join(data->tcheck_dead, NULL);
+	pthread_join(data->tall_eat, NULL);
+	free(data->philo);
+	i = 0;
 	pthread_mutex_destroy(&data->dead);
 	pthread_mutex_destroy(&data->eating_count);
 	pthread_mutex_destroy(&data->time_eat);
+	while (i != data->arg.philo_counter)
+	{
+		pthread_mutex_destroy(&data->fork[i]);
+		i++;
+	}
+	free(data->fork);
 	pthread_mutex_destroy(&data->write);
 }
 

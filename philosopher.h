@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:02:02 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/30 17:05:30 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:35:14 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_data
 }	t_data;
 
 void			*routine(void *args);
+int				check_death(t_data *data);
 void			custom_printf(t_philo *philo, char *str, char *color);
 long int		actual_time(void);
 void			ft_usleep(long int time);

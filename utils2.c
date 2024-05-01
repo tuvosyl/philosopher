@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:53 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/30 17:08:40 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:53:20 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+
+int	check_death(t_data *data)
+{
+	pthread_mutex_lock(&data->dead);
+	if (data->dead_flag == true)
+	{
+		pthread_mutex_unlock(&data->dead);
+		return (1);
+	}
+	pthread_mutex_unlock(&data->dead);
+	return (0);
+}
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n )
 {

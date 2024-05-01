@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:38:19 by valentins         #+#    #+#             */
-/*   Updated: 2024/04/30 17:07:07 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:53:30 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	eat(t_philo *philo)
 {
-	if (philo->data->dead_flag == true)
+	if (check_death(philo->data))
 		return ;
 	pthread_mutex_lock(philo->own_fork);
 	pthread_mutex_lock(philo->left_fork);
-	if (philo->data->dead_flag == true)
+	if (check_death(philo->data))
 	{
 		pthread_mutex_unlock(philo->own_fork);
 		pthread_mutex_unlock(philo->left_fork);
@@ -50,19 +50,21 @@ void	*routine(void *args)
 
 	philo = (t_philo *)args;
 	custom_printf(philo, "created", B_RED);
+	pthread_mutex_lock(&philo->data->time_eat);
 	philo->last_meal_timer = actual_time();
-	if ((philo->id +1) % 2 == 0)
+	pthread_mutex_unlock(&philo->data->time_eat);
+	if ((philo->id + 1) % 2 == 0)
 		ft_usleep(10);
 	while (12)
 	{
 		custom_printf(philo, "big brain time", B_CYAN);
-		if (philo->data->dead_flag == true)
+		if (check_death(philo->data))
 			break ;
 		eat(philo);
-		if (philo->data->dead_flag == true)
+		if (check_death(philo->data))
 			break ;
 		sleepp(philo);
-		if (philo->data->dead_flag == true)
+		if (check_death(philo->data))
 			break ;
 	}
 	return (NULL);

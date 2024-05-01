@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:18:36 by valentins         #+#    #+#             */
-/*   Updated: 2024/04/30 16:54:34 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:45:09 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	custom_printf(t_philo *philo, char *str, char *color)
 	pthread_mutex_lock(&philo->data->time_eat);
 	printf("%s%ld %d %s%s\n", color,
 		actual_time() - philo->data->arg.start_time, philo->id + 1, str, RESET);
-	pthread_mutex_unlock(&philo->data->time_eat);
 	pthread_mutex_unlock(&philo->data->write);
+	pthread_mutex_unlock(&philo->data->time_eat);
 }
