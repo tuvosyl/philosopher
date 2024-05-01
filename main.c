@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:33:44 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/05/01 11:50:27 by val              ###   ########.fr       */
+/*   Updated: 2024/05/01 12:19:36 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main(int argc, char **argv)
 	converting_input(argv, &data);
 	if (data.arg.philo_counter == 1)
 	{
-		printf("%s%d %d %s%s\n", B_RED, 0, 1, "died", RESET);
+		printf("%s%d %d %s%s\n", B_RED, 0, 1, "dead", RESET);
 		return (0);
 	}
 	create_philo(&data);

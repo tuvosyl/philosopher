@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dead_routine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:00:35 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/30 17:08:07 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/05/01 12:20:53 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	*dead_routine(void *args)
 		i = 0;
 		while (i < data->arg.philo_counter)
 		{
+			if (check_death(data))
+				return (NULL);
 			pthread_mutex_lock(&data->time_eat);
 			if ((actual_time() - data->philo[i].last_meal_timer)
 				> data->arg.time_to_die)

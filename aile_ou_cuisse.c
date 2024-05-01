@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aile_ou_cuisse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
+/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:44:31 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/04/30 16:53:24 by vsoltys          ###   ########.fr       */
+/*   Updated: 2024/05/01 12:20:30 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,4 @@ void	*all_eat_routine(void *args)
 		if (i >= data->arg.philo_counter)
 			return (condition(data), NULL);
 	}
-	custom_printf(&data->philo[1], "non", B_RED);
 }
