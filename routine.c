@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:38:19 by valentins         #+#    #+#             */
-/*   Updated: 2024/05/01 20:46:53 by val              ###   ########.fr       */
+/*   Updated: 2024/05/08 01:48:14 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,10 @@ void	eat(t_philo *philo)
 	pthread_mutex_lock(&philo->data->time_eat);
 	philo->last_meal_timer = actual_time();
 	pthread_mutex_unlock(&philo->data->time_eat);
+	philo->eating_count++;
 	ft_usleep(philo->data->arg.time_to_eat);
 	pthread_mutex_unlock(philo->own_fork);
 	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_lock(&philo->data->eating_count);
-	philo->eating_count++;
-	pthread_mutex_unlock(&philo->data->eating_count);
 }
 
 void	sleepp(t_philo *philo)

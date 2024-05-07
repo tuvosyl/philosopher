@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:02:02 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/05/01 11:35:14 by val              ###   ########.fr       */
+/*   Updated: 2024/05/08 01:51:10 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_data
 	pthread_mutex_t	write;
 	pthread_mutex_t	dead;
 	pthread_mutex_t	time_eat;
-	pthread_mutex_t	eating_count;
 	pthread_t		tcheck_dead;
 	pthread_t		tall_eat;
 	bool			dead_flag;

@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:53 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/05/01 11:53:20 by val              ###   ########.fr       */
+/*   Updated: 2024/05/08 01:50:54 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	norme(t_data *data)
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->arg.philo_counter);
 	data->dead_flag = false;
 	pthread_mutex_init(&data->dead, NULL);
-	pthread_mutex_init(&data->eating_count, NULL);
 	pthread_mutex_init(&data->time_eat, NULL);
 	pthread_mutex_init(&data->write, NULL);
 }
