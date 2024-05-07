@@ -6,7 +6,7 @@
 /*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:44:31 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/05/08 01:58:23 by val              ###   ########.fr       */
+/*   Updated: 2024/05/08 01:58:28 by val              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*all_eat_routine(void *args)
 	data->arg.max_eating--;
 	ft_usleep(10);
 	while (1)
-	{ 
+	{
 		i = 0;
 		if (check_death(data))
 			return (NULL);
