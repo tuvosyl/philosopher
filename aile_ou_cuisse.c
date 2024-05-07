@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aile_ou_cuisse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:44:31 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/05/01 13:39:59 by val              ###   ########.fr       */
+/*   Updated: 2024/05/07 17:30:27 by vsoltys          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	*all_eat_routine(void *args)
 	data = (t_data *)args;
 	if (data->arg.max_eating == -1)
 		return (NULL);
+	data->arg.max_eating--;
 	ft_usleep(10);
 	while (1)
 	{
-		ft_usleep(1);
 		i = 0;
 		while (i < data->arg.philo_counter)
 		{

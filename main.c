@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: val <val@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vsoltys <vsoltys@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:33:44 by vsoltys           #+#    #+#             */
-/*   Updated: 2024/05/01 12:19:36 by val              ###   ########.fr       */
+/*   Updated: 2024/05/07 17:46:12 by vsoltys          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	wait_all_philo(t_data *data)
 
 	i = 0;
 	pthread_create(&data->tcheck_dead, NULL, dead_routine, data);
-	pthread_create(&data->tall_eat, NULL, all_eat_routine, data);
+	//pthread_create(&data->tall_eat, NULL, all_eat_routine, data);
 	while (i != data->arg.philo_counter)
 	{
 		pthread_join(data->philo[i].philo, NULL);
 		i++;
 	}
 	pthread_join(data->tcheck_dead, NULL);
-	pthread_join(data->tall_eat, NULL);
+	//pthread_join(data->tall_eat, NULL);
 	free(data->philo);
 	i = 0;
 	pthread_mutex_destroy(&data->dead);
@@ -115,7 +115,9 @@ int	main(int argc, char **argv)
 	converting_input(argv, &data);
 	if (data.arg.philo_counter == 1)
 	{
-		printf("%s%d %d %s%s\n", B_RED, 0, 1, "dead", RESET);
+		printf("%s%d %d %s%s\n", B_YELLOW, 0, 1, "has taken a fork", RESET);
+		ft_usleep(data.arg.time_to_die);
+		printf("%s%d %d %s%s\n", B_RED, data.arg.time_to_die, 1, "dead", RESET);
 		return (0);
 	}
 	create_philo(&data);

@@ -3,7 +3,7 @@ NAME 		= philo
 CC 			= cc
 RM			= rm -f
 
-CFLAGS 		+= -g -Wall -Wextra -Werror -O3 -fsanitize=thread
+CFLAGS 		+= -g -Wall -Wextra -Werror -O3
 THREAD_FLAG		+= -pthread
 
 SRC 		= main.c routine.c utils.c utils2.c dead_routine.c aile_ou_cuisse.c
